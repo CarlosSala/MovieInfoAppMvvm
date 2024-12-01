@@ -45,6 +45,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -88,8 +89,9 @@ fun HomeScreen(navController: NavHostController) {
                         ) {
                             CircularProgressIndicator(color = ProgressIndicatorDefaults.circularColor)
                         }
-                        if (!state.error.isNullOrEmpty()){
-                            Toast.makeText(LocalContext.current, state.error, Toast.LENGTH_SHORT).show()
+                        if (!state.error.isNullOrEmpty()) {
+                            Toast.makeText(LocalContext.current, state.error, Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 }

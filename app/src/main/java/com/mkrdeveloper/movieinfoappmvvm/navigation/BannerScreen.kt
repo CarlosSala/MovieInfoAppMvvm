@@ -1,5 +1,6 @@
 package com.mkrdeveloper.movieinfoappmvvm.navigation
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,39 +24,59 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.mkrdeveloper.movieinfoappmvvm.R
 
+@Preview(showBackground = true)
 @Composable
-fun BannerScreen(navController: NavHostController) {
-    val modifier = Modifier
+fun BannerScreenPreview(modifier: Modifier = Modifier) {
+
+    BannerScreen(navController = NavHostController(LocalContext.current))
+}
+
+@Composable
+fun BannerScreen(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+) {
     Box(modifier = modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.banner_image), contentDescription = "",
-            modifier.fillMaxSize(), contentScale = ContentScale.Crop
+            modifier = modifier.fillMaxSize(),
+            painter = painterResource(id = R.drawable.banner_image),
+            contentDescription = "",
+            contentScale = ContentScale.Crop
         )
         Column(
-            modifier
+            modifier = modifier
                 .wrapContentHeight()
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .background(color = Color.White.copy(0.4f), RoundedCornerShape(20.dp))
-                .border(0.5.dp, Color.White, RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp)),
+                .background(
+                    color = Color.White.copy(alpha = 0.4f),
+                    shape = RoundedCornerShape(size = 20.dp)
+                )
+                .border(
+                    width = 0.5.dp,
+                    color = Color.White,
+                    shape = RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp)
+                ),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val offset = Offset(10.0f, 10f)
             Text(
                 text = "Enjoy the world of movies",
-                modifier.padding(vertical = 25.dp),
+                modifier = modifier.padding(vertical = 25.dp),
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
                 style = TextStyle(
@@ -80,14 +101,21 @@ fun BannerScreen(navController: NavHostController) {
             )
             Button(
                 onClick = { navController.navigate("Home Screen") },
-                modifier
-                    .padding(bottom = 55.dp, start = 20.dp, end = 20.dp)
+                modifier = modifier
                     .fillMaxWidth()
-                    .background(color = Color.Gray.copy(0.8f), RoundedCornerShape(16.dp))
+                    .padding(
+                        bottom = 55.dp,
+                        start = 20.dp,
+                        end = 20.dp
+                    )
+                    .background(
+                        color = Color.Gray.copy(0.8f),
+                        shape = RoundedCornerShape(16.dp)
+                    )
                     .border(
                         BorderStroke(
-                            3.dp,
-                            linearGradientBrush
+                            width = 3.dp,
+                            brush = linearGradientBrush
                         ),
                         shape = RoundedCornerShape(16.dp)
                     ),
@@ -95,13 +123,15 @@ fun BannerScreen(navController: NavHostController) {
                     containerColor = Color.Transparent
                 )
             ) {
-                Text(text = "Get In" ,style = TextStyle(
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    fontFamily = FontFamily(Font(R.font.cinzel_decorative)),
-                    textAlign = TextAlign.Center
-                ))
+                Text(
+                    text = "Get In", style = TextStyle(
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        fontFamily = FontFamily(Font(R.font.cinzel_decorative)),
+                        textAlign = TextAlign.Center
+                    )
+                )
             }
         }
     }
