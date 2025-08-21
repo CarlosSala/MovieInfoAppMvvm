@@ -55,6 +55,7 @@ import com.mkrdeveloper.movieinfoappmvvm.viewModel.MovieViewModel
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
+
     val movieViewModel = viewModel<MovieViewModel>()
     val state = movieViewModel.state
     Scaffold(

@@ -8,9 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mkrdeveloper.movieinfoappmvvm.models.Data
 import com.mkrdeveloper.movieinfoappmvvm.models.Details
-import com.mkrdeveloper.movieinfoappmvvm.paging.PaginationFactory
+import com.mkrdeveloper.movieinfoappmvvm.paging.PaginationManager
 import kotlinx.coroutines.launch
-import java.lang.Error
 
 class MovieViewModel : ViewModel() {
 
@@ -18,14 +17,14 @@ class MovieViewModel : ViewModel() {
     var state by mutableStateOf(ScreenState())
     var id by mutableIntStateOf(0)
 
-    private val pagination = PaginationFactory(
+    private val pagination = PaginationManager(
         initialPage = state.page,
         onLoadUpdated = {
             state = state.copy(
                 isLoading = it
             )
         },
-        onRequest = {nextPage ->
+        onRequest = { nextPage ->
             repository.getMovieList(nextPage)
         },
         getNextKey = {
@@ -34,7 +33,7 @@ class MovieViewModel : ViewModel() {
         onError = {
             state = state.copy(error = it?.localizedMessage)
         },
-        onSuccess = {items, newPage ->
+        onSuccess = { items, newPage ->
             state = state.copy(
                 movies = state.movies + items.data,
                 page = newPage,
@@ -80,6 +79,7 @@ class MovieViewModel : ViewModel() {
     }
 }
 
+// used to show or hide elements in homeScreen
 data class ScreenState(
     val movies: List<Data> = emptyList(),
     val page: Int = 1,
