@@ -19,25 +19,16 @@ class MovieViewModel : ViewModel() {
 
     private val pagination = PaginationManager(
         initialPage = state.page,
-        onLoadUpdated = {
-            state = state.copy(
-                isLoading = it
-            )
-        },
-        onRequest = { nextPage ->
-            repository.getMovieList(nextPage)
-        },
-        getNextKey = {
-            state.page + 1
-        },
-        onError = {
-            state = state.copy(error = it?.localizedMessage)
-        },
+        onLoadUpdated = { state = state.copy(isLoading = it) },
+        onRequest = { nextPage -> repository.getMovieList(nextPage) },
+        getNextKey = { state.page + 1 },
+        onError = { state = state.copy(error = it?.localizedMessage) },
         onSuccess = { items, newPage ->
             state = state.copy(
                 movies = state.movies + items.data,
                 page = newPage,
-                endReached = state.page == 25
+                // page number limited
+                endReached = state.page == 5
             )
         }
     )
